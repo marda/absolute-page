@@ -1,12 +1,11 @@
 {
-  "name": "absolute.app/menu",
-  "description": "Absolute/Module/Menu",
+  "name": "absolute.app/page",
+  "description": "Absolute/Module/Page",
   "type": "package",
   "license": ["MIT", "BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
   "minimum-stability": "dev",
   "require": {
     "absolute.app/core": "dev-master",
-    "absolute.app/file": "dev-master",
     "absolute.app/team": "dev-master",
     "absolute.app/category": "dev-master",
     "absolute.app/user": "dev-master"
