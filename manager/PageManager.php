@@ -169,7 +169,37 @@ class PageManager extends BaseManager
         return false;
     }
 
+    private function _getProjectItem($projectId, $pageId)
+    {
+        return $this->getPage($this->database->table('page')->where(':project_page.project_id', $projectId)->where("page_id", $pageId)->fetch());
+    }
+
+    public function _pageProjectDelete($projectId, $pageId)
+    {
+        return $this->database->table('project_page')->where('project_id', $projectId)->where('page_id', $pageId)->delete();
+    }
+
+    public function _pageProjectCreate($projectId, $pageId)
+    {
+        return $this->database->table('project_page')->insert(['project_id' => $projectId, 'page_id' => $pageId]);
+    }
+
     /* EXTERNAL METHOD */
+
+    public function getProjectItem($projectId, $pageId)
+    {
+        return $this->_getProjectItem($projectId, $pageId);
+    }
+
+    public function pageProjectDelete($projectId, $pageId)
+    {
+        return $this->_pageProjectDelete($projectId, $pageId);
+    }
+
+    public function pageProjectCreate($projectId, $pageId)
+    {
+        return $this->_pageProjectCreate($projectId, $pageId);
+    }
 
     public function getById($id)
     {
