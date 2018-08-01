@@ -82,6 +82,11 @@ class UserPresenter extends PageBasePresenter
 
     private function _postUserRequest($urlId, $urlId2)
     {
+        if (!isset($urlId) || !isset($urlId2))
+        {
+            $this->httpResponse->setCode(Response::S400_BAD_REQUEST);
+            return;
+        }
         $ret = $this->userManager->userPageCreate($urlId, $urlId2);
         if (!$ret)
             $this->httpResponse->setCode(Response::S500_INTERNAL_SERVER_ERROR);
@@ -91,6 +96,11 @@ class UserPresenter extends PageBasePresenter
 
     private function _deleteUserRequest($urlId, $urlId2)
     {
+        if (!isset($urlId) || !isset($urlId2))
+        {
+            $this->httpResponse->setCode(Response::S400_BAD_REQUEST);
+            return;
+        }
         $ret = $this->userManager->userPageDelete($urlId, $urlId2);
         if (!$ret)
             $this->httpResponse->setCode(Response::S404_NOT_FOUND);

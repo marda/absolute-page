@@ -16,7 +16,7 @@ class PageCRUDManager extends BaseCRUDManager
     // OTHER METHODS
     // CONNECT METHODS
 
-    /*public function connectUsers($id, $users)
+    public function connectUsers($id, $users)
     {
         $users = array_unique(array_filter($users));
         // DELETE
@@ -80,6 +80,27 @@ class PageCRUDManager extends BaseCRUDManager
         return true;
     }
 
+    public function connectProjects($id, $projects)
+    {
+        $projects = array_unique(array_filter($projects));
+        // DELETE
+        $this->database->table('project_page')->where('page_id', $id)->delete();
+        // INSERT NEW
+        $data = [];
+        foreach ($projects as $project)
+        {
+            $data[] = [
+                "project_id" => $project,
+                "page_id" => $id,
+            ];
+        }
+        if (!empty($data))
+        {
+            $this->database->table("project_page")->insert($data);
+        }
+        return true;
+    }
+
     public function connectProject($id, $projectId)
     {
         $this->database->table('project_page')->where('page_id', $id)->delete();
@@ -91,7 +112,7 @@ class PageCRUDManager extends BaseCRUDManager
 
     // CUD METHODS
 
-    public function addStar($id)
+    /*public function addStar($id)
     {
         return $this->database->table('page')->where('id', $id)->update(array('starred' => true));
     }
@@ -135,8 +156,22 @@ class PageCRUDManager extends BaseCRUDManager
 
     public function update($id, $array)
     {
+        if(isset($array['users']))
+            $this->connectUsers ( $id, $array['users']);
+        if(isset($array['teams']))
+            $this->connectTeams ( $id, $array['teams']);
+        if(isset($array['categories']))
+            $this->connectCategories ( $id, $array['categories']);
+        if(isset($array['projects']))
+            $this->connectProjects( $id, $array['projects']);
+        
         unset($array['id']);
         unset($array['created']);
+        unset($array['users']);
+        unset($array['teams']);
+        unset($array['categories']);
+        unset($array['projects']);
+        
         $array['modified'] = new \DateTime();
         return $this->database->table('page')->where('id', $id)->update($array);
     }

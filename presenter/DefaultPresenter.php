@@ -95,6 +95,15 @@ class DefaultPresenter extends PageBasePresenter
         }
         else
         {
+            if (isset($post->users))
+                $this->pageCRUDManager->connectUsers($ret, $post->users);
+            if (isset($post->teams))
+                $this->pageCRUDManager->connectTeams($ret, $post->teams);
+            if (isset($post->categories))
+                $this->pageCRUDManager->connectCategories($ret, $post->categories);
+            if (isset($post->projects))
+                $this->pageCRUDManager->connectProjects($ret, $post->projects);
+            
             $this->httpResponse->setCode(Response::S201_CREATED);
         }
     }
